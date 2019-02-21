@@ -25,6 +25,26 @@ include(cmake/Misc.cmake)
 include(cmake/Summary.cmake)
 include(cmake/ConfigGen.cmake)
 
+#Testing
+find_package(Caffe REQUIRED)
+find_package(CUDA REQUIRED)
+find_package(Glog REQUIRED)
+if(CUDA_FOUND)
+add_definitions(-DCUDA_FOUND)
+endif(CUDA_FOUND)
+include_directories(
+  ${CAFFE_INCLUDE_DIRS}
+  ${CUDA_INCLUDE_DIRS}
+  ${GLOG_INCLUDE_DIR}
+)
+target_link_libraries(
+  **
+  ${CAFFE_LIBRARIES}
+  ${CUDA_LIBRARIES}
+  ${GLOG_LIBRARY}
+)
+#testing
+
 # ---[ Options
 caffe_option(CPU_ONLY  "Build Caffe without CUDA support" ON) # TODO: rename to USE_CUDA
 caffe_option(USE_CUDNN "Build Caffe with cuDNN library support" OFF)
